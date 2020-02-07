@@ -16,8 +16,8 @@
 #include<Ethernet.h>
 #include<NexaCtrl.h>
 
-unsigned long controller_id =  13112270; 		// Remote controller id.
-unsigned int device 		= 1; 				// Nexa remot, button 2
+//unsigned long controller_id =  13112270; 		// Remote controller id.
+//unsigned int device 		= 1; 				// Nexa remot, button 2
 
 
 const int httpLEDPin		= 4;				// LED indicator for http activity. Both as a server and a client
@@ -74,7 +74,8 @@ void runApi(){
 	EthernetClient client = server.available();
 	// If a client connects, run the API logic.
 	if (client) {
-		Serial.println("new client: " + String(client.remoteIP()));
+		Serial.print("new client: ");
+		Serial.println(client.remoteIP());
 		digitalWrite(httpLEDPin, HIGH);
 		bool currentLineIsBlank = true;
 		while (client.connected()) {
@@ -155,11 +156,31 @@ String parseRequest(String requestString, String variableName){
 }
 
 void runCommands(String readString){
-	if(parseRequest(readString, "light") == "1"){
-		nexaCtrl.DeviceOn(controller_id, device);
-	} else if(parseRequest(readString, "light") == "0"){
-		nexaCtrl.DeviceOff(controller_id, device);
-	}
+	unsigned long controller_id = 4294967295;
+    bool controller_id_valid = false;
+    unsigned long device_id = 4294967295;
+    bool device_id_valid = false;
+
+    // If variable is valid. Cast to long int that can be used by the nexaCtrl
+    if(parseRequest(readString, "controller")!="-1"){
+	    controller_id   =  parseRequest(readString, "controller").toInt();
+        controller_id_valid = true;
+    }
+
+    // If variable is valid. Cast to long int that can be used by the nexaCtrl
+    if(parseRequest(readString, "device")!="-1"){
+	    device_id   =  parseRequest(readString, "device").toInt(); 
+        device_id_valid = true;
+    }
+
+    // Send the message over 433Mhz that the selected remote wants the selected device to turn on/off.
+    if(controller_id_valid && device_id_valid){
+        if(parseRequest(readString, "light") == "1"){
+            nexaCtrl.DeviceOn(controller_id, device_id);
+        } else if(parseRequest(readString, "light") == "0"){
+            nexaCtrl.DeviceOff(controller_id, device_id);
+        }
+    }
 }
 
 void returnStatus(EthernetClient client){
