@@ -10,7 +10,7 @@ This build is based on the Arduino Uno with a ethernet shield, and a cheap 433Hz
 
 ### Electronics
 ![433Mzh Transmitter](https://github.com/mEsUsah/ArduinoHTTP_nexa_API/blob/master/README-files/433MHz-RF-Wireless-Transmitter-Pinout.png?raw=true)
-* Cheap 433MHz transmitter from China 
+* Cheap 433MHz transmitter from China. (read more on [lastminuteengineers.com](https://lastminuteengineers.com/433mhz-rf-wireless-arduino-tutorial/))
 * A 17cm ghetto style antenna (1/4 wavelenght antenna) soldered to the antenna pad on the module..
 * W5100 based ethernet chield or module.
 * Any "normal" arduino like the Uno, Mega, Mini or Nano.
