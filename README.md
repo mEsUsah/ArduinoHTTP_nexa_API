@@ -9,16 +9,19 @@ This build is based on the Arduino Uno with a ethernet shield, and a cheap 433Hz
 * Install it in the Arduino IDE via Sketch => Include Library => Add -ZIP library...
 
 ### Electronics
-* Cheap 433MHz transmitter from China, with a 17cm ghetto style antenna.
-* W5100 based ethernet chield or similar.
+* Cheap 433MHz transmitter from China 
+* A 17cm ghetto style antenna (1/4 wavelenght antenna) soldered to the antenna pad on the module..
+* W5100 based ethernet chield or module.
 * Any "normal" arduino like the Uno, Mega, Mini or Nano.
+* 2pcs of status LED's.
+* 2pcs of correct resistors for the LED's.
 
 # How the sketch works.
 Define the api key and network configurations to fit your project. I use static IP on all my API deviced, since i want to find them at the same spot every time.
 Send a HTTP request to the arduino with the correct API key, what remote you want the arduino to act like, what device id you want it to controll and what you want to do with it.
 A 433Mzh packet sniffer is useful to obtain these ID's.
 
-### Example request
+### Example HTTP request
 ```
 http://10.22.22.60?apikey=s3cr37&light=1&controller=13112270&device=1
 ```
@@ -27,4 +30,4 @@ http://10.22.22.60?apikey=s3cr37&light=1&controller=13112270&device=1
 * controller = 13112270
 * device = 1
 
-This will give the command over 433Mzh HomeEasy protocol that remote controll with the ID of 13112270 want the device with the ID of 1 to go high/on/max. 
+If the apikey is correct - this will give the command over 433Mzh HomeEasy protocol that remote controll with the ID of 13112270 want the device with the ID of 1 to go high/on/max. 
